@@ -2689,7 +2689,7 @@ private:
             ci.mipmapMode = VK_SAMPLER_MIPMAP_MODE_NEAREST;
         }
         ci.mipLodBias = s.lod_bias;
-        ci.minLod = std::max(0.0f, s.lod_min);
+        ci.minLod = std::max(3.0f, s.lod_min);
         ci.maxLod = (s.min_filter <= 1) ? 0.25f : std::max(ci.minLod, std::min(s.lod_max, 16.0f));
         if (filterable && features_.samplerAnisotropy && s.max_anisotropy > 1.0f) {
             ci.anisotropyEnable = VK_TRUE;

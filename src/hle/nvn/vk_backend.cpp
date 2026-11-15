@@ -2689,7 +2689,8 @@ private:
             ci.mipmapMode = VK_SAMPLER_MIPMAP_MODE_NEAREST;
         }
         ci.mipLodBias = s.lod_bias;
-        float potato_lod = (s.min_filter > 1) ? 3.0f : 0.0f;
+        bool is_world_tex = (s.min_filter > 1) && (s.max_anisotropy > 1.0f || s.wrap[0] == 0);
+float potato_lod = is_world_tex ? 3.0f : 0.0f;
 ci.minLod = std::max(potato_lod, s.lod_min);
         ci.maxLod = (s.min_filter <= 1) ? 0.25f : std::max(ci.minLod, std::min(s.lod_max, 16.0f));
         if (filterable && features_.samplerAnisotropy && s.max_anisotropy > 1.0f) {

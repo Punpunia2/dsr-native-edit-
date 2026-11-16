@@ -2679,7 +2679,7 @@ private:
         VkSamplerCreateInfo ci{VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO};
         ci.magFilter = s.mag_filter == 0 ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
         ci.minFilter = (s.min_filter == 0 || s.min_filter == 2 || s.min_filter == 4) ? VK_FILTER_NEAREST : VK_FILTER_LINEAR;
-        ci.mipmapMode = (s.min_filter == 4 || s.min_filter == 5) ? VK_SAMPLER_MIPMAP_MODE_LINEAR : VK_SAMPLER_MIPMAP_MODE_NEAREST;
+        ci.mipmapMode = VK_SAMPLER_MIPMAP_MODE_NEAREST;
         ci.addressModeU = AddressMode(s.wrap[0]);
         ci.addressModeV = AddressMode(s.wrap[1]);
         ci.addressModeW = AddressMode(s.wrap[2]);
@@ -2694,7 +2694,7 @@ float potato_lod = is_world_tex ? 3.0f : 0.0f;
 ci.minLod = std::max(potato_lod, s.lod_min);
         ci.maxLod = (s.min_filter <= 1) ? 0.25f : std::max(ci.minLod, std::min(s.lod_max, 16.0f));
         if (filterable && features_.samplerAnisotropy && s.max_anisotropy > 1.0f) {
-            ci.anisotropyEnable = VK_TRUE;
+            ci.anisotropyEnable = VK_FALSE;
             ci.maxAnisotropy = std::min(s.max_anisotropy, props_.limits.maxSamplerAnisotropy);
             // `max_anisotropy` (settings): a lower limit than the game's, for slower GPUs (0 = the game's).
             const int cap = dsr::GetRuntime().config.max_anisotropy;
